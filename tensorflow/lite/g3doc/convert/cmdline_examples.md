@@ -1,4 +1,4 @@
-# Converter command-line examples
+# Converter command line examples
 
 This page shows how to use the TensorFlow Lite Converter in the command line.
 
@@ -68,9 +68,9 @@ tflite_convert \
 has fewer required flags than frozen graphs due to access to additional data
 contained within the SavedModel. The values for `--input_arrays` and
 `--output_arrays` are an aggregated, alphabetized list of the inputs and outputs
-in the [SignatureDefs](https://www.tensorflow.org/serving/signature_defs) within
+in the [SignatureDefs](../../serving/signature_defs.md) within
 the
-[MetaGraphDef](https://www.tensorflow.org/guide/saved_model#apis_to_build_and_load_a_savedmodel)
+[MetaGraphDef](https://www.tensorflow.org/saved_model#apis_to_build_and_load_a_savedmodel)
 specified by `--saved_model_tag_set`. As with the GraphDef, the value for
 `input_shapes` is automatically determined whenever possible.
 
@@ -95,11 +95,11 @@ tflite_convert \
 
 The TensorFlow Lite Converter is compatible with fixed point quantization models
 described
-[here](https://github.com/tensorflow/tensorflow/blob/master/tensorflow/contrib/q
-uantize/README.md). These are float models with `FakeQuant*` ops inserted at the
-boundaries of fused layers to record min-max range information. This generates a
-quantized inference workload that reproduces the quantization behavior that was
-used during training.
+[here](https://github.com/tensorflow/tensorflow/blob/master/tensorflow/contrib/quantize/README.md).
+These are float models with `FakeQuant*` ops inserted at the boundaries of fused
+layers to record min-max range information. This generates a quantized inference
+workload that reproduces the quantization behavior that was used during
+training.
 
 The following command generates a quantized TensorFlow Lite FlatBuffer from a
 "quantized" TensorFlow GraphDef.

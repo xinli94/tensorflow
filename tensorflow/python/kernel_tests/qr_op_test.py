@@ -40,6 +40,7 @@ def _AddTest(test_class, op_name, testcase_name, fn):
 
 class QrOpTest(test.TestCase):
 
+  @test_util.run_v1_only("b/120545219")
   def testWrongDimensions(self):
     # The input to qr should be a tensor of at least rank 2.
     scalar = constant_op.constant(1.)
@@ -66,8 +67,8 @@ class QrOpTest(test.TestCase):
       val = self.evaluate(all_ops)
       for i in range(8):
         q = 4 * i
-        self.assertAllEqual(val[q], val[q + 2])  # q1 == q2
-        self.assertAllEqual(val[q + 1], val[q + 3])  # r1 == r2
+        self.assertAllClose(val[q], val[q + 2])  # q1 == q2
+        self.assertAllClose(val[q + 1], val[q + 3])  # r1 == r2
 
 
 def _GetQrOpTest(dtype_, shape_, full_matrices_, use_static_shape_):
@@ -115,6 +116,7 @@ def _GetQrOpTest(dtype_, shape_, full_matrices_, use_static_shape_):
       tol = 1e-14
     self.assertAllClose(identity, xx, atol=tol)
 
+  @test_util.run_v1_only("b/120545219")
   def Test(self):
     np.random.seed(1)
     x_np = np.random.uniform(
@@ -163,6 +165,7 @@ class QrGradOpTest(test.TestCase):
 
 def _GetQrGradOpTest(dtype_, shape_, full_matrices_):
 
+  @test_util.run_v1_only("b/120545219")
   def Test(self):
     np.random.seed(42)
     a = np.random.uniform(low=-1.0, high=1.0, size=shape_).astype(dtype_)

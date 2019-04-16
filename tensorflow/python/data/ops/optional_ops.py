@@ -29,6 +29,7 @@ from tensorflow.python.ops import gen_dataset_ops
 from tensorflow.python.util.tf_export import tf_export
 
 
+@tf_export("data.experimental.Optional")
 @six.add_metaclass(abc.ABCMeta)
 class Optional(object):
   """Wraps a nested structure of tensors that may/may not be present at runtime.
@@ -169,6 +170,10 @@ class OptionalStructure(structure.Structure):
   def _to_tensor_list(self, value):
     return [value._variant_tensor]  # pylint: disable=protected-access
 
+  def _to_batched_tensor_list(self, value):
+    raise NotImplementedError(
+        "Unbatching for `tf.data.experimental.Optional` objects.")
+
   def _from_tensor_list(self, flat_value):
     if (len(flat_value) != 1 or flat_value[0].dtype != dtypes.variant or
         not flat_value[0].shape.is_compatible_with(tensor_shape.scalar())):
@@ -196,6 +201,10 @@ class OptionalStructure(structure.Structure):
   def _batch(self, batch_size):
     raise NotImplementedError(
         "Batching for `tf.data.experimental.Optional` objects.")
+
+  def _unbatch(self):
+    raise NotImplementedError(
+        "Unbatching for `tf.data.experimental.Optional` objects.")
 
 
 # pylint: disable=protected-access
